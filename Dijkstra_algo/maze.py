@@ -1,6 +1,6 @@
 import random
-taille_x=21
-taille_y=21
+taille_x=41
+taille_y=41
 
 def init_maze(M,x,y):
     for i in range(y):
@@ -13,26 +13,26 @@ def print_maze(M):
     n=len(M)
     m=len(M[0])
     for i in range(n):
-        print M[i]
-    print '##################################################'
+        print (M[i])
+    print ('##################################################')
 
 def print_nice_maze(M):
-    print '##################################################'
+    print ('##################################################')
     n=len(M)
     m=len(M[0])
     for i in range(n):
         for j in range(m):
             if(M[i][j]==0):
-                print 'X',
+                print ('X',end = "")
             else:
-                print ' ',
-        print ''
-    print '##################################################'
+                print (' ',end = "")
+        print ('')
+    print ('##################################################')
 
 def init_maze_case(M):
     n=len(M)
     m=len(M[0])
-    print n,m
+    print (n,m)
     count=1
     i=1
     j=1
@@ -61,21 +61,21 @@ def set_path(M,x,y,from_x,from_y,tab):
     if(M[x+1][y]!=0 and x+1!=from_x and tab[x+1][y]!=1):
         M[x+1][y]=M[x][y]
         tab[x+1][y]=1
-        print 'rec1',x+1,y
+        print ('rec1',x+1,y)
         set_path(M,x+1,y,x,y,tab)
     if (M[x-1][y]!=0 and x-1!=from_x and tab[x-1][y]!=1):
         M[x-1][y]=M[x][y]
-        print 'rec2',x-1,y
+        print ('rec2',x-1,y)
         tab[x-1][y]=1
         set_path(M,x-1,y,x,y,tab)
     if (M[x][y+1]!=0 and y+1!=from_y and tab[x][y+1]!=1):
         M[x][y+1]=M[x][y]
-        print 'rec3',x,y+1
+        print ('rec3',x,y+1)
         tab[x][y+1]=1
         set_path(M,x,y+1,x,y,tab)
     if(M[x][y-1]!=0 and y-1!=from_y and tab[x][y-1]!=1):
         M[x][y-1]=M[x][y]
-        print 'rec4',x,y-1
+        print ('rec4',x,y-1)
         tab[x][y-1]=1
         set_path(M,x,y-1,x,y,tab)
 
@@ -85,7 +85,7 @@ def break_wall(Map,count_not_perfect):
         b=random.randint(1,(taille_y-3)/2)*2
     else:
         b=random.randint(0,(taille_y-3)/2)*2 +1
-    print a,b 
+    print (a,b) 
     tab=[]
     init_maze(tab,taille_x,taille_y)
     if(Map[a][b]==0):
@@ -97,8 +97,8 @@ def break_wall(Map,count_not_perfect):
             set_path(Map,a,b,0,0,tab)
             return -3
         else:
-            print 'condition1->',Map[a+1][b],Map[a-1][b]
-            print 'condition2->',Map[a][b+1],Map[a][b-1]
+            print ('condition1->',Map[a+1][b],Map[a-1][b])
+            print ('condition2->',Map[a][b+1],Map[a][b-1])
             if( Map[a+1][b]!=0 and Map[a+1][b]!=Map[a-1][b]):
                 Map[a][b]=Map[a+1][b]
                 
@@ -113,7 +113,7 @@ def break_wall(Map,count_not_perfect):
 
 def is_done(Map):
     a=Map[1][1]
-    print Map[1][1]
+    print (Map[1][1])
     for i in range(taille_y):
         for j in range(taille_x):
             if (Map[i][j]!=0 and Map[i][j]!=a):
@@ -126,8 +126,8 @@ def build_maze(Map):
     init_maze_case(Map)
     count=0
     while(not is_done(Map)):
-        print 'count->',count
-        print 'countnotperfect ->',count_not_perfect
+        print ('count->',count)
+        print ('countnotperfect ->',count_not_perfect)
         count_not_perfect+=break_wall(Map,count_not_perfect)
         print_maze(Map)
         print_nice_maze(Map)
